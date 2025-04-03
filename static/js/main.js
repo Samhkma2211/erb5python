@@ -6,4 +6,6 @@ $(document).on('click',"#changeBtn", function(){
     $("#register").addClass('d-none');
     $("#login").removeClass('d-none');
   }
-})
+});
+
+setTimeout(()=>{$("#message").fadeOut("slow");},3000);

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 from pathlib import Path
+from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'debug_toolbar',
     'pages.apps.PagesConfig',
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
@@ -80,8 +82,11 @@ WSGI_APPLICATION = 'pawp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'pawpdb',
+        'USER': 'postgres',
+        'PASSWORD': '1987',
+        'HOST': 'localhost'
     }
 }
 
@@ -134,3 +139,11 @@ INTERNAL_IPS = [
     "127.0.0.1",
     # ...
 ]
+
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = '/media/'
+
+MESSAGE_TAGS = {
+    messages.ERROR : 'danger',
+    messages.SUCCESS : 'success'
+}

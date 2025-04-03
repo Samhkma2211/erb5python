@@ -20,13 +20,26 @@
       </ul>
       
       <div class="ml-auto d-flex align-items-center">
-        <a href="login.html" class="btn btn-sm btn-custom order-lg-2">Login/Register</a>
+        {% if user.is_authenticated %}
+        <!-- logout -->
+        <a href="javascript:{document.getElementById('logout').submit()}" class="btn btn-sm btn-custom order-lg-2">Logout</a>
+        <form action="{% url 'logout' %}" method="POST" id="logout">
+        {% csrf_token %}
+        <input type="hidden" />
+        </form>
+        <!-- dashboard -->
+        <a href="#" class="nav-link order-lg-3"> <i class="fas fa-user mr-1"></i>HI, {{user.last_name}}</a>
+        {% else %}
+        <a href="{% url 'login' %}" class="btn btn-sm btn-custom order-lg-2">Login/Register</a>
+        {% endif %}
+
         <a href="/cart" class="btn position-relative mr-3 order-lg-1">
             <i class="fas fa-shopping-cart"></i>
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger text-light">
                 0
             </span>
         </a>
+
         <div class=" text-right social">
           <a href="#"><i class="fa-brands fa-facebook mr-2"></i></a>
           <a href="#"><i class="fa-brands fa-instagram"></i></a>
