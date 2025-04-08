@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}About our story{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <!-- Introduction Section -->
+    <div class="about-section">
+        <h2 class="font-weight-bolder mb-3 text-center title-color">Our Story</h2>
+        <div class="text-justify">
+            <h4>Love your life and love your pets!</h4>
+            <p>In 2009, Clara Chan, a lifelong animal lover, found herself standing in the rain outside a shivering, abandoned golden retriever puppy. She took him home, named him Sunny, and nursed him back to health. But as she visited local shelters to find Sunny's siblings, she was heartbroken by the overcrowded facilities and the lack of resources for pet owners struggling to care for their animals. Clara, then a 28-year-old veterinary assistant, gathered her friends—a dog trainer, a retired teacher and a marketing freelancer. They establish a one-stop organization to rescue animals, support pet owners and build a community.</p>
+        </div>
+    </div>
+
+    <!-- Awards Section -->
+    <div class="about-section">
+        <h2 class="font-weight-bolder mb-3 text-center title-color">Awards</h2>
+        <div class="text-center">
+            <img src="{% static 'img/about_01.jpeg'%}" alt="Our Awards" class="about-image">
+            <p class="mt-4">We are honoured to have been nominated & to have won several prestigious awards due to our customer service and great loyal pet parent customers. So thank you for making it possible!</p>
+        </div>
+    </div>
+
+    <!-- Team Section -->
+    <div class="about-section">
+        <h2 class="font-weight-bolder mb-3 text-center title-color">Our Team</h2>
+        <div class="text-center">
+            <img src="{% static 'img/about_02.jpeg' %}" alt="Our Team" class="about-image">
+            <p class="mt-4">Meet the dedicated professionals who make PawParadise possible. Our team of animal lovers works tirelessly to ensure the best care for your pets.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

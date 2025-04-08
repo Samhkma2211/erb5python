@@ -42,6 +42,10 @@ body{
   /* font-size: 0.875rem; */
 }
 
+a,a:hover {
+  text-decoration: none;
+}
+
 /* nav bar */
 .navbar {
   opacity: 0.9;
@@ -50,7 +54,7 @@ body{
 }
 
 .social a {
-  text-decoration: none;
+  /* text-decoration: none; */
   color: var(--clr-blue-5);
   font-size: 1.1rem;
 }
@@ -64,11 +68,7 @@ body{
   background: var(--clr-blue-5);
 }
 
-.index_card:hover {
-  transform: scale(1.05);
-  transition: var(--transition);
-}
-
+/* common */
 .btn-custom {
   background-color: var(--clr-blue-3);
   border: none;
@@ -86,7 +86,6 @@ body{
   background-color: var(--clr-blue-3);
   transform: translateY(-2px);
 }
-
 
 .btn-outline-custom {
   color: var(--clr-blue-3);
@@ -116,16 +115,39 @@ body{
   object-fit:cover;
 }
 
+.index_card:hover {
+  transform: scale(1.05);
+  transition: var(--transition);
+}
+
+/* about */
+.about-section {
+  background: white;
+  padding: 3rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+}
+
+.about-image {
+  max-width: 100%;
+  height: auto;
+  width: 500px;
+  max-height: 300px;
+  border-radius: 10px;
+  margin: 1.5rem 0;
+}
+
 /* login */
 .login-r-container {
-  background: linear-gradient(rgba(255,255,255,0.5),rgba(255,255,255,0.7)),url(images/login_01.jpg) center/cover no-repeat;
+  background: linear-gradient(rgba(255,255,255,0.5),rgba(255,255,255,0.7)),url(../img/login_01.jpg) center/cover no-repeat;
   /* background: url(images/n02091831_6323.jpg) center/cover no-repeat; */
   /* opacity: 0.5; */
   /* height: 350px; */
 }
 
 .login-l-container {
-  background: linear-gradient(rgba(255,255,255,0.5),rgba(255,255,255,0.7)),url(images/login_02.jpg) center/cover no-repeat;
+  background: linear-gradient(rgba(255,255,255,0.5),rgba(255,255,255,0.7)),url(../img/login_02.jpg) center/cover no-repeat;
   /* background: url(images/n02091831_6323.jpg) center/cover no-repeat; */
   /* opacity: 0.5; */
   /* height: 350px; */
