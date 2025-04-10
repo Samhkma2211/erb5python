@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'debug_toolbar',
     'pages.apps.PagesConfig',
+    'adoption.apps.AdoptionConfig',
     'accounts.apps.AccountsConfig',
 ]
 
@@ -85,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'pawpdb',
         'USER': 'postgres',
-        'PASSWORD': '1987',
+        'PASSWORD': '',
         'HOST': 'localhost'
     }
 }
@@ -140,8 +141,8 @@ INTERNAL_IPS = [
     # ...
 ]
 
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-# MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 MESSAGE_TAGS = {
     messages.ERROR : 'danger',

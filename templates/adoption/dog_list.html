@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block title %}Available Dogs{% endblock %}
+{% block content %}
+<div class="container py-3">
+    <!-- Search Bar -->
+    <div class="row mb-4">
+        <div class="col-md-10 mx-auto">
+            <form action="{% url 'adoption:adop_search' %}" method="GET" class="search-form">
+                <div class="input-group">
+                    <input type="text" name="keywords" class="form-control" placeholder="Search by name or description..." value="{{ values.keywords }}">
+                    <select name="gender" class="form-select" style="max-width: 150px;">
+                        <option value="">Gender</option>
+                        {% for key, value in gender_choices.items %}
+                            <option value="{{ key }}" {% if values.gender == key %}selected{% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="size" class="form-select" style="max-width: 150px;">
+                        <option value="">Size</option>
+                        {% for key, value in size_choices.items %}
+                            <option value="{{ key }}" {% if values.size == key %}selected{% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="type" class="form-select" style="max-width: 200px;">
+                        <option value="">Dog Type</option>
+                        {% for key, value in dogtype_choices.items %}
+                            <option value="{{ key }}" {% if values.type == key %}selected{% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="btn btn-custom" type="submit">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <h3 class="text-center font-weight-bolder mt-5 mb-4 title-color">Available Dogs for Adoption</h3>
+    <div class="row">
+        {% for dog in dogs %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="{{ dog.photo_main.url }}" class="card-img-top" alt="{{ dog.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ dog.name }}</h5>
+                        <p class="card-text">
+                            <small class="text-muted">{{ dog.dogtype }} • {{ dog.gender }} • {{ dog.size }}</small>
+                        </p>
+                        <a href="{% url 'adoption:dog_detail' dog.id %}" class="btn btn-custom">View Details</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12 text-center" >
+                <p>No dogs available for adoption at the moment.</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            {% if dogs.has_other_pages %}
+            <ul class="pagination justify-content-center">
+                {% if dogs.has_previous %}
+                <li class="page-item">
+                    <a href="?page={{dogs.previous_page_number}}" class="page-link">&laquo;</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">&laquo;</a>
+                </li>
+                {% endif %}
+                {% for i in dogs.paginator.page_range %}
+                {% if dogs.number == i %}
+                <li class="page-item active">
+                    <a class="page-link">{{i}}</a>
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{i}}">{{i}}</a>
+                </li>
+                {% endif %}{% endfor %}
+                {% if dogs.has_next %}
+                <li class="page-item">
+                    <a href="?page={{dogs.next_page_number}}" class="page-link">&raquo;</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">&raquo;</a>
+                </li>
+                {% endif %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

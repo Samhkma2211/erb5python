@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% block title %}{{ dog_detail.name }}{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <!-- Main Photo -->
+        <div class="col-md-5 mb-4">
+            <div class="main-photo-container" style="max-height: 550px; overflow: hidden;">
+                <img src="{{ dog_detail.photo_main.url }}" class="img-fluid rounded shadow w-100 h-100 object-fit-cover" alt="{{ dog_detail.name }}">
+            </div>
+            
+            <!-- Additional Photos with Lightbox -->
+            <div class="row mt-3 g-2">
+                {% if dog_detail.photo_1 %}
+                <div class="col-3">
+                    <a href="{{ dog_detail.photo_1.url }}" data-lightbox="dog-images" data-title="{{ dog_detail.name }}">
+                        <img src="{{ dog_detail.photo_1.url }}" class="img-fluid rounded" alt="Additional photo 1">
+                    </a>
+                </div>
+                {% endif %}
+                {% if dog_detail.photo_2 %}
+                <div class="col-3">
+                    <a href="{{ dog_detail.photo_2.url }}" data-lightbox="dog-images" data-title="{{ dog_detail.name }}">
+                        <img src="{{ dog_detail.photo_2.url }}" class="img-fluid rounded" alt="Additional photo 2">
+                    </a>
+                </div>
+                {% endif %}
+                {% if dog_detail.photo_3 %}
+                <div class="col-3">
+                    <a href="{{ dog_detail.photo_3.url }}" data-lightbox="dog-images" data-title="{{ dog_detail.name }}">
+                        <img src="{{ dog_detail.photo_3.url }}" class="img-fluid rounded" alt="Additional photo 3">
+                    </a>
+                </div>
+                {% endif %}
+                {% if dog_detail.photo_4 %}
+                <div class="col-3">
+                    <a href="{{ dog_detail.photo_4.url }}" data-lightbox="dog-images" data-title="{{ dog_detail.name }}">
+                        <img src="{{ dog_detail.photo_4.url }}" class="img-fluid rounded" alt="Additional photo 4">
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Dog Details -->
+        <div class="col-md-7">
+            <h2 class="mb-4">{{ dog_detail.name }}</h2>
+            <div class="card">
+                <div class="card-body">
+                    <strong>Age:</strong> 
+                      {% with today=now|date:"Y-m-d" %}
+                      {% with age=dog_detail.dateofbirth|timesince:today %}
+                      {{ age }}
+                      {% endwith %}
+                      {% endwith %}</p>
+                    <p><strong>Gender:</strong> {{ dog_detail.gender }}</p>
+                    <p><strong>Size:</strong> {{ dog_detail.size }}</p>
+                    <p><strong>Dog Type:</strong> {{ dog_detail.dogtype }}</p>
+                    <p><strong>Microchip Number:</strong> {{ dog_detail.mircochip_no }}</p>
+                    <p><strong>Desexed:</strong> {% if dog_detail.desexed %}Yes{% else %}No{% endif %}</p>
+                    
+                    <p><strong>Description</strong><p>
+                    <p>{{ dog_detail.description }}</p>
+                    
+                    {% if dog_detail.medical_history %}
+                    <p><strong>Medical History</strong><p>
+                    <p>{{ dog_detail.medical_history }}</p>
+                    {% endif %}
+
+                    {% if dog_detail.available %}
+                    <div class="mt-4 d-flex justify-content-between align-items-center">
+                        <a href="{% url 'adoption:dog_list' %}" class="btn btn-secondary">Back</a>
+                        <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#inquiryModal">
+                            Inquire About Adoption
+                        </button>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-info mt-4">
+                        This dog is no longer available for adoption.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Inquiry Modal -->
+        <div class="modal fade" id="inquiryModal" tabindex="-1" aria-labelledby="inquiryModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="inquiryModalLabel">Inquire About {{ dog_detail.name }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="#" id="inquiryForm">
+                            
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Your Name</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Phone</label>
+                                <input type="tel" class="form-control" id="phone" name="phone" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" form="inquiryForm" class="btn btn-custom">Submit Inquiry</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
