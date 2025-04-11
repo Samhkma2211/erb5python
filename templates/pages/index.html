@@ -82,6 +82,8 @@
             </a>
           </div>
         </div>
+      <a href="{% url 'adoption:dog_list' %}" class="btn btn-block btn-outline-custom w-50 mx-auto">Explore Adoption</a>
+      
     </section>
     <!-- shop -->
     <section class="mx-auto my-5">
@@ -119,7 +121,7 @@
     <!-- vet -->
     <section class="mx-auto w-75 my-5">
       <h3 class="font-weight-bolder mb-3 text-center title-color">Services</h3>
-      <p class="text-center">Need to find a vet clinic, grooming or boarding services for your pet?  <a href="#">Click to find out more...</a></p>
+      <p class="text-center">Need to find a vet clinic, grooming or boarding services for your pet?  <a href="{% url 'services:services' %}">Click to find out more...</a></p>
       
     </section>
 {% endblock %}

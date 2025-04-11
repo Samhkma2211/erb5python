@@ -1,0 +1,94 @@
+{% extends 'base.html' %} {% load static %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/services.css' %}"> {% endblock %}
+{% block title %}Service Details{% endblock %}
+
+{% block content %}
+<section class="py-4">
+    <div class="container">        
+        <div class="row">
+            <!-- Main Shop Photo -->   
+            <div class="col-md-8 mb-3">
+                <img src="{{ service.photo_main.url }}" class="img-fluid rounded main-img" alt="{{ service.name }}">
+            </div>
+            <!-- Sidebar Column -->
+            <div class="col-md-4">
+                <!-- Photo Gallery -->
+                <div class="">
+                    <div class="row">
+                        <div class="col-6 col-md-12 mb-3">
+                            {% if service.photo_1 %}
+                                <div class=""> 
+                                    <a href="{{ service.photo_1.url }}" data-lightbox="gallery" data-title="Gallery 1">
+                                        <img src="{{ service.photo_1.url }}" alt="Gallery 1" class="img-fluid rounded side-img" >
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-6 col-md-12 mb-3">
+                            {% if service.photo_2 %}
+                                <div class="card-img-bottom" style="position: relative;">
+                                    <a href="{{ service.photo_2.url }}" data-lightbox="gallery" data-title="Gallery 2">
+                                        <img src="{{ service.photo_2.url }}" alt="Gallery 2" class="img-fluid rounded side-img">
+                                        {% if service.photo_3 or service.photo_4 %}
+                                            <div class="photo-overlay">
+                                                <span class="overlay-text">See more photos</span>
+                                            </div>
+                                        {% endif %}
+                                    </a>
+                                </div>
+                            {% endif %}                                
+                        </div>
+                    </div>    
+                    <!-- Hidden Gallery Links -->
+                    <div style="display: none;">
+                        {% if service.photo_3 %}
+                        <a href="{{ service.photo_3.url }}" data-lightbox="gallery" data-title="Gallery 3">
+                            <img src="{{ service.photo_3.url }}" alt="Gallery 3">
+                        </a>
+                        {% endif %}
+                        {% if service.photo_4 %}
+                        <a href="{{ service.photo_4.url }}" data-lightbox="gallery" data-title="Gallery 4">
+                            <img src="{{ service.photo_4.url }}" alt="Gallery 4">
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div> 
+        </div> <!-- End of Row for Main Photo and Sidebar -->
+        
+        <!-- Service Details -->        
+        <div class="row">
+            <div class="col-md-10">
+            <h3 class="font-weight mb-3 service-title"> {{ service.name }}</h3>         
+                <div class="mb-4">
+                    <p><i class="fas fa-map-marker-alt me-2 text-primary"></i> {{ service.district }}</p>
+                    {% if service.veterinary %}<span class="badge bg-warning text-white">Veterinary</span>{% endif %}
+                    {% if service.pet_grooming %}<span class="badge bg-primary text-white">Pet Grooming</span>{% endif %}
+                    {% if service.pet_boarding %}<span class="badge bg-success text-white">Pet Boarding</span>{% endif %}
+                    {% if service.emergency_service %}<span class="badge bg-danger text-white">24HR Emergency Service</span>{% endif %}
+                </div>
+            <!-- Service Description -->
+            <h5 class="mb-4">About</h5>
+            <p class="text-justify">{{ service.description }}</p>
+            <!-- Contact Information -->
+            <h5 class="mb-4">Contact Information</h5>                   
+            {% if service.phone %}<p><i class="fas fa-phone me-2"></i> {{ service.phone }}</p>{% endif %}
+            <p><i clas{% if service.email %}s="fas fa-envelope me-2"></i> {{ service.email }}</p>{% endif %}
+            {% if service.address %}<p><i class="fas fa-home me-2"></i> {{ service.address }}</p>{% endif %}
+            {% if service.website %}
+            <p><i class="fas fa-globe me-2 text-muted"></i><strong>Website:</strong><a href="{{ service.website }}" target="_blank" class="text-primary">Visit Website</a>
+            </p>
+            {% endif %}       
+        </div>    
+        
+        <!-- Back Button -->
+        <div class="row">
+            <div class="mb-4 mt-4">
+                <a {% if 'services/search' in request.META.HTTP_REFERER %} href="{{ request.META.HTTP_REFERER }}" {% else %} href="{% url 'services:serv_search' %}" {% endif %}    class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Search Results
+                </a>
+            </div>
+        <div>
+    </div>
+</section>
+{% endblock %}

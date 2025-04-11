@@ -1,0 +1,179 @@
+{% extends 'base.html' %} 
+{% block title %}Pet Services{% endblock %} 
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center font-weight-bolder title-color mb-3">Search Pet Services</h2>    
+
+    <!-- Search and Filter Form -->
+    <div class="card shadow-sm">
+        <div class="card-body p-4">            
+            <form action="{% url 'services:serv_search' %}" method="get" class="search-form">                
+                <div class="form-row justify-content-center">
+                    <div class="col-sm-6 col-md-4 col-lg-3 mb-2">
+                        <div class="dropdown form-control border-0">
+                            <span class="bg-white">
+                                <i class="fas fa-tags text-muted"></i>
+                            </span>
+                            <button class="btn btn-sm btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select services
+                            </button>
+                            <div class="dropdown-menu p-3">
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="veterinary" id="veterinary" 
+                                    {% if values.veterinary %} checked {% endif %} >
+                                    <label class="form-check-label" for="veterinary">Veterinary</label>
+                                </div>    
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="pet_grooming" id="pet_grooming"
+                                    {% if values.pet_grooming %} checked {% endif %} >
+                                        <label class="form-check-label" for="pet_grooming">Pet Grooming</label>
+                                </div>    
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="pet_boarding" id="pet_boarding"
+                                    {% if values.pet_boarding %} checked {% endif %} >
+                                        <label class="form-check-label" for="pet_boarding">Pet Boarding</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="emergency_service" id="emergency_service"
+                                    {% if values.emergency_service %} checked {% endif %} >
+                                        <label class="form-check-label" for="emergency_service">24HR Emergency Service</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4 col-lg-3 mb-2">
+                        <div class="form-control border-0">
+                            <i class="fas fa-map-marker-alt text-muted"></i>
+                            <select name="district" id="district" class="custom-select-sm">
+                                <option value="">All Districts</option>
+                                {% for key, value in district_choices.items %}
+                                    <option value="{{key}}"
+                                    {% if key == values.district %} selected {% endif %}> {{value}}
+                                    </option>
+                                {% endfor %}   
+                            </select>    
+                        </div>
+                    </div>
+                    <div class="col-sm-8 col-md-6 col-lg-4 mb-2">
+                        <div class="input-group">
+                            <span class="input-group-text bg-white border-end-0">
+                                <i class="fas fa-search text-muted"></i>
+                            </span>
+                            <input 
+                                type="text" 
+                                name="search" 
+                                id="search" 
+                                class="form-control border-start-0 ps-0" 
+                                placeholder="name, address, or services..." 
+                                value="{{ search_query }}">
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-md-2 col-lg-2 mb-2">
+                        <button type="submit" class="btn btn-custom"><i class="fas fa-search"></i>Search
+                        </button>
+                    </div>
+                </div>
+            </form>            
+        </div>
+    </div>
+</div>
+
+<!-- Search Results -->
+<div class="container mt-4">
+    <!-- Display Selected Filters -->
+    <div class="col-md-10 title-color">
+        <p>You are searching for:
+            {% if values.veterinary %}
+            <span style="text-decoration: underline;"> Veterinary</span>
+            {% endif %}
+            {% if values.pet_grooming %}
+            <span style="text-decoration: underline;"> Pet Grooming</span>
+            {% endif %}
+            {% if values.pet_boarding %}
+            <span style="text-decoration: underline;"> Pet Boarding</span>
+            {% endif %}
+            {% if values.emergency_service %}
+            <span style="text-decoration: underline;"> 24HR Emergency Service</span>
+            {% endif %}
+            {% if values %}
+            <span style="text-decoration: underline;"> {{values.district}} </span>
+            {% endif %}
+            {% if search_query %}
+            <span style="text-decoration: underline;"> {{ search_query }}</span>
+            {% endif %}                
+        </p>
+    </div>
+    <div class="row g-4">
+        {% if services %}
+            {% for service in services %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="{{ service.photo_main.url }}" class="card-img-top" style="max-height: 210px; object-fit: cover;" alt="{{ service.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ service.name }}</h5>
+                        <p class="card-text">
+                            <i class="fas fa-map-marker-alt text-primary"></i> {{ service.district }}<br>
+                            {% if service.veterinary %}<span class="badge bg-warning text-white">Veterinary</span>{% endif %}
+                            {% if service.pet_grooming %}<span class="badge bg-primary text-white">Pet Grooming</span>{% endif %}
+                            {% if service.pet_boarding %}<span class="badge bg-success text-white">Pet Boarding</span>{% endif %}
+                            {% if service.emergency_service %}<span class="badge bg-danger text-white">24HR Emergency Service</span>{% endif %}
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'services:service_detail' service.id %}" class="btn btn-sm btn-custom">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="col col-md-10 mb-4">
+                <div class="alert alert-info">No service found. Try adjusting your search filters</div>
+            </div>
+        {% endif %}
+    </div>
+    
+    <!-- Pagination -->
+    {% if services.has_other_pages %}
+        <ul class="pagination">
+        {% if services.has_previous %}
+            <li class="page-item">
+                <a href="?page={{services.previous_page_number}}&{{values.urlencode}}" class="page-link">Previous</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#">Previous</a>
+            </li>
+        {% endif %}
+        <!--for loop all the page number-->
+        {% for i in services.paginator.page_range %}
+        <!-- if page number eq to current page then display the number and go nowhere-->
+            {% if services.number == i %}
+                <li class="page-item active">
+                    <a class="page-link">{{i}}</a>
+                </li>
+            {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{i}}&{{values.urlencode}}">{{i}}</a>            
+                </li>
+            {% endif %}
+        {% endfor %}
+        {% if services.has_next %}
+            <li class="page-item">
+                <a href="?page={{services.next_page_number}}&{{values.urlencode}}" class="page-link">Next</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        {% endif %}
+        </ul>
+    {% endif %}
+    
+    <!-- Back Button -->
+    <div class="mb-4 mt-4">
+        <a href="{% url 'services:services' %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back to Services
+        </a>
+    </div>
+</div>
+
+{% endblock %}

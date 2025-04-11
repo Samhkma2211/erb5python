@@ -1,0 +1,20 @@
+district_choices = {
+    'Islands':'Islands',
+    'Kwai Tsing':'Kwai Tsing',
+    'Sai Kung':'Sai Kung',
+    'Tsuen Wan':'Tsuen Wan',
+    'Tuen Mun':'Tuen Mun',
+    'Yuen Long':'Yuen Long',
+    'Wong Tai Sin':'Wong Tai Sin',
+    'Sha Tin':'Sha Tin',
+    'Tai Po': 'Tai Po',
+    'Kowloon City':'Kowloon City',
+    'Kwun Tong':'Kwun Tong',
+    'Sham Shui Po':'Sham Shui Po',
+    'Yau Tsim Mong':'Yau Tsim Mong',
+    'Central & Western':'Central & Western',
+    'Eastern':'Eastern',
+    'Southern':'Southern',
+    'Wan Chai':'Wan Chai',
+    'North':'North'
+}

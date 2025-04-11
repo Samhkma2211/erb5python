@@ -3,30 +3,36 @@
 {% block content %}
 <div class="container py-3">
     <!-- Search Bar -->
-    <div class="row mb-4">
-        <div class="col-md-10 mx-auto">
+    <div class="card shadow-sm py-4 row">
+        <div class="col-md-10 col-lg-11 mx-auto">
             <form action="{% url 'adoption:adop_search' %}" method="GET" class="search-form">
-                <div class="input-group">
-                    <input type="text" name="keywords" class="form-control" placeholder="Search by name or description..." value="{{ values.keywords }}">
-                    <select name="gender" class="form-select" style="max-width: 150px;">
+                <div class="form-group form-row">
+                    <div class="col-md-12 col-lg-4 mb-2"><input type="text" name="keywords" class="form-control" placeholder="Search by name or description..." value="{{ values.keywords }}"></div>
+                    <div class="col-md-3 col-lg-2 mb-2"><select name="gender" class="form-control">
                         <option value="">Gender</option>
                         {% for key, value in gender_choices.items %}
                             <option value="{{ key }}" {% if values.gender == key %}selected{% endif %}>{{ value }}</option>
                         {% endfor %}
-                    </select>
-                    <select name="size" class="form-select" style="max-width: 150px;">
+                    </select></div>
+                    <div class="col-md-3 col-lg-2 mb-2"><select name="size" class="form-control">
                         <option value="">Size</option>
                         {% for key, value in size_choices.items %}
                             <option value="{{ key }}" {% if values.size == key %}selected{% endif %}>{{ value }}</option>
                         {% endfor %}
-                    </select>
-                    <select name="type" class="form-select" style="max-width: 200px;">
+                    </select></div>
+                    <div class="col-md-3 col-lg-2 mb-2"><select name="type" class="form-control">
                         <option value="">Dog Type</option>
                         {% for key, value in dogtype_choices.items %}
                             <option value="{{ key }}" {% if values.type == key %}selected{% endif %}>{{ value }}</option>
                         {% endfor %}
-                    </select>
-                    <button class="btn btn-custom" type="submit">Search</button>
+                    </select></div>
+                    <div class="col col-lg-2 "><button class="btn btn-block btn-custom" type="submit">Search</button></div>
+
+                    
+                    
+                    
+                    
+                    
                 </div>
             </form>
         </div>

@@ -1,0 +1,79 @@
+/* services */
+.services-section {
+    background: url(../img/services_01.jpg) ;
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 40px 0;
+    margin-bottom: 20px;
+}
+.service-title {
+    margin: 0;
+    color:#0077b6;
+}
+.service-card {
+    transition: transform 0.2s;
+    margin-bottom: 1.5rem;
+    border: none;
+    border-radius: 15px;    
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+}
+.service-card:hover {
+    transform: translateY(-5px);
+}
+.feature-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+.feature-list li {
+    padding: 5px 0;
+    position: relative;
+    padding-left: 25px;
+}
+.feature-list li:before {
+    content: "•";
+    color: #454E88;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+}
+
+/* service_detail */
+
+.main-img {
+    width: 100%; 
+    height: 460px; 
+    object-fit: cover;
+}
+.side-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.photo-overlay {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.7));
+    overflow: hidden;
+    width: 100%;
+    height: 0;
+    transition: 0.5s ease;
+}
+
+.card-img-bottom:hover .photo-overlay {
+    height: 100%;
+}
+
+.overlay-text {
+    color: #caf0f8;
+    font-size: 0.8rem;
+    position: absolute;
+    overflow: hidden;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

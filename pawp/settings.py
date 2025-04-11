@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'pages.apps.PagesConfig',
     'adoption.apps.AdoptionConfig',
+    'services.apps.ServicesConfig',
     'accounts.apps.AccountsConfig',
 ]
 

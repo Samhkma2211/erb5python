@@ -69,7 +69,7 @@
 
                     {% if dog_detail.available %}
                     <div class="mt-4 d-flex justify-content-between align-items-center">
-                        <a href="{% url 'adoption:dog_list' %}" class="btn btn-secondary">Back</a>
+                        <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-secondary">Back</a>
                         <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#inquiryModal">
                             Inquire About Adoption
                         </button>
