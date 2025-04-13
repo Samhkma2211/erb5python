@@ -123,6 +123,49 @@
                 </div>
             </div>
         </div>
+
+        <div class="card border-0 bg-transparent">
+            <div class="card-header bg-transparent border-0">
+                <h5>
+                    <a
+                        href="#collapse7" 
+                        data-parent="#accordion"
+                        data-toggle="collapse" 
+                    >+ 
+                    </a>
+                Q7. Have other questions?
+                </h5>
+            </div>
+            <div class="collapse" id="collapse7">
+                <div class="card-body pl-5 shadow-sm">
+
+                        <form action="#" id="inquiryForm">
+                            
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Your Name</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Phone</label>
+                                <input type="tel" class="form-control" id="phone" name="phone" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <button type="submit" form="inquiryForm" class="btn btn-custom">Submit Inquiry</button>
+                            </div>
+                        </form>
+                    
+                    
+                </div>
+            </div>
+        </div>
     </div>  
 </div>
 {% endblock %}

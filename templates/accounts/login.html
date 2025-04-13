@@ -16,6 +16,9 @@
             <div class="card-body">              
               <form action="{% url 'login' %}" method="POST">
                 {% csrf_token %}
+                {% if request.GET.next %}
+                <input type="hidden" name="next" value="{{ request.GET.next }}">
+                {% endif %}
                 <div class="form-group">
                   <label for="username">Username</label>
                   <input type="text" name="username" class="form-control" required />
@@ -113,9 +116,5 @@
     </div>
   </div>
 </div>
-
-{% block extra_js %}
-<script src='{% static "js/main.js" %}'></script>
-{% endblock %}
 
 {% endblock %}

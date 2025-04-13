@@ -1,0 +1,76 @@
+{% extends 'base.html' %} {% load static %}
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <!-- Product Image -->
+        <div class="col-md-6 mb-4">
+            <div class="card border-0 shadow-sm">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 400px; object-fit: contain;">
+                {% else %}
+                    <div class="bg-light d-flex align-items-center justify-content-center" style="height: 400px;">
+                        <i class="fas fa-image fa-3x text-muted"></i>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Product Details -->
+        <div class="col-md-6">
+            <h3 class="font-weight-bold mb-4">{{ product.name }}</h3>
+            <h4 class="font-weight-bold text-primary mb-4">${{ product.price }}</h4>
+            <div class="mb-4">
+                <h5 class="mb-3">Description</h5>
+                <p class="text-muted">{{ product.description|default:"No description available." }}</p>
+            </div>
+            
+            {% if product.stock > 0 %}
+            <div class="mb-4 d-flex">
+                <div class="d-flex align-items-center">
+                    <form method="POST" action="{% url 'shop:update_quantity' product.id 'decrease' %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-secondary">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </form>
+                    <input type="number" class="form-control text-center" value="{{ current_quantity }}" min="1" max="{{ product.stock }}" readonly>
+                    <form method="POST" action="{% url 'shop:update_quantity' product.id 'increase' %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-secondary">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </form>
+                    
+                </div>
+                <div class="text-muted align-content-center ml-2">
+                    <i class="fas fa-box mr-1"></i>{{ product.stock }} items available
+                </div>
+            </div>
+            
+            <form action="{% url 'shop:add_to_cart' product.id %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="quantity" value="{{ current_quantity|default:1 }}">
+                <button type="submit" class="btn btn-custom btn-lg w-100">
+                    <i class="fas fa-shopping-cart mr-2"></i>Add to Cart
+                </button>
+            </form>
+
+            {% else %}
+            <div class="alert alert-warning">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                This product is currently out of stock.
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="my-4 ml-4">
+            <a href="{% url 'shop:product_list' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

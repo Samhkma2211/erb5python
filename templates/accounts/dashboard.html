@@ -1,13 +1,13 @@
-{% extends "base.html" %} {% load humanize %} {% block content %}
+{% extends "base.html" %} {% block content %}
 <section id="showcase-inner" class="py-5 bg-info text-white">
-  <div class="container">
-    <div class="row text-center">
-      <div class="col-md-12">
-        <h1 class="display-4">User Dashboard</h1>
-        <p class="lead">Manage your PawParadise account</p>
-      </div>
+    <div class="container">
+        <div class="row text-center">
+        <div class="col-md-12">
+            <h1 class="display-4">User Dashboard</h1>
+            <p class="lead">Manage your PawParadise account</p>
+        </div>
+        </div>
     </div>
-  </div>
 </section>
 
 <section id="dashboard" class="py-4">
@@ -19,4 +19,84 @@
     </div>
   </div>
 </section>
+
+<div class="container py-5">
+    <div class="row">
+        <!-- Main Content -->
+        <div class="col-md-12">
+            <!-- Profile Section -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4>Profile Information</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+                            <p><strong>Email:</strong> {{ user.email }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Username:</strong> {{ user.username }}</p>
+                            <p><strong>Member Since:</strong> {{ user.date_joined|date:"M d, Y" }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order History Section -->
+            <div class="card">
+                <div class="card-header">
+                    <h4>Order History</h4>
+                </div>
+                <div class="card-body">
+                    {% if orders %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Order #</th>
+                                        <th>Date</th>
+                                        <th>Items</th>
+                                        <th>Total</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for order in orders %}
+                                    <tr>
+                                        <td>{{ order.id }}</td>
+                                        <td>{{ order.created_at|date:"M d, Y" }}</td>
+                                        <td>
+                                            {% for item in order.items.all|slice:":3" %}
+                                                {{ item.product.name }} ({{ item.quantity }})<br>
+                                            {% endfor %}
+                                            {% if order.items.count > 3 %}...{% endif %}
+                                        </td>                            
+                                        <td>${{ order.total|floatformat:2 }}</td>
+                                        <td>{{ order.get_status_display }}</td>
+                                        <td>
+                                            <a href="{% url 'order:order_confirmation' order.id %}" class="btn btn-sm btn-outline-custom">
+                                                View Detail
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-5">
+                            <i class="fas fa-shopping-bag fa-3x text-muted mb-3"></i>
+                            <p class="lead">You haven't placed any orders yet</p>
+                            <a href="{% url 'shop:product_list' %}" class="btn btn-custom">
+                                Start Shopping
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

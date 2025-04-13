@@ -10,11 +10,11 @@
             <form action="{% url 'services:serv_search' %}" method="get" class="search-form">                
                 <div class="form-row justify-content-center">
                     <div class="col-sm-6 col-md-4 col-lg-3 mb-2">
-                        <div class="dropdown form-control border-0">
-                            <span class="bg-white">
+                        <div class="input-group">
+                            <div class="input-group-prepend mr-1 align-items-center bg-white">
                                 <i class="fas fa-tags text-muted"></i>
-                            </span>
-                            <button class="btn btn-sm btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select services
+                            </div>
+                            <button class="btn btn-outline rounded border-secondary dropdown-toggle form-control text-left" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select services
                             </button>
                             <div class="dropdown-menu p-3">
                                 <div class="form-check mb-2">
@@ -38,12 +38,14 @@
                                         <label class="form-check-label" for="emergency_service">24HR Emergency Service</label>
                                 </div>
                             </div>
+                            
+                            
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4 col-lg-3 mb-2">
-                        <div class="form-control border-0">
-                            <i class="fas fa-map-marker-alt text-muted"></i>
-                            <select name="district" id="district" class="custom-select-sm">
+                        <div class="input-group">
+                            <div class="input-group-prepend mr-1 align-items-center"><i class="fas fa-map-marker-alt text-muted pr-1"></i></div>
+                            <select name="district" id="district" class="form-control rounded-left">
                                 <option value="">All Districts</option>
                                 {% for key, value in district_choices.items %}
                                     <option value="{{key}}"
@@ -55,20 +57,20 @@
                     </div>
                     <div class="col-sm-8 col-md-6 col-lg-4 mb-2">
                         <div class="input-group">
-                            <span class="input-group-text bg-white border-end-0">
-                                <i class="fas fa-search text-muted"></i>
-                            </span>
+                            <div class="input-group-prepend mr-1 align-items-center">
+                                <i class="fa fa-search text-muted"></i>
+                            </div>
                             <input 
                                 type="text" 
                                 name="search" 
                                 id="search" 
-                                class="form-control border-start-0 ps-0" 
+                                class="form-control rounded-left" 
                                 placeholder="name, address, or services..." 
                                 value="{{ search_query }}">
                         </div>
                     </div>
                     <div class="col-sm-4 col-md-2 col-lg-2 mb-2">
-                        <button type="submit" class="btn btn-custom"><i class="fas fa-search"></i>Search
+                        <button type="submit" class="btn btn-custom btn-block"><i class="fas fa-search"></i>Search
                         </button>
                     </div>
                 </div>

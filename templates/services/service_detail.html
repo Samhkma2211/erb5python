@@ -7,11 +7,11 @@
     <div class="container">        
         <div class="row">
             <!-- Main Shop Photo -->   
-            <div class="col-md-8 mb-3">
+            <div class="col-12 col-md-8 mb-3">
                 <img src="{{ service.photo_main.url }}" class="img-fluid rounded main-img" alt="{{ service.name }}">
             </div>
             <!-- Sidebar Column -->
-            <div class="col-md-4">
+            <div class="col col-md-4">
                 <!-- Photo Gallery -->
                 <div class="">
                     <div class="row">
@@ -61,7 +61,7 @@
             <div class="col-md-10">
             <h3 class="font-weight mb-3 service-title"> {{ service.name }}</h3>         
                 <div class="mb-4">
-                    <p><i class="fas fa-map-marker-alt me-2 text-primary"></i> {{ service.district }}</p>
+                    <p><i class="fas fa-map-marker-alt mr-1 text-primary"></i> {{ service.district }}</p>
                     {% if service.veterinary %}<span class="badge bg-warning text-white">Veterinary</span>{% endif %}
                     {% if service.pet_grooming %}<span class="badge bg-primary text-white">Pet Grooming</span>{% endif %}
                     {% if service.pet_boarding %}<span class="badge bg-success text-white">Pet Boarding</span>{% endif %}
@@ -72,18 +72,18 @@
             <p class="text-justify">{{ service.description }}</p>
             <!-- Contact Information -->
             <h5 class="mb-4">Contact Information</h5>                   
-            {% if service.phone %}<p><i class="fas fa-phone me-2"></i> {{ service.phone }}</p>{% endif %}
-            <p><i clas{% if service.email %}s="fas fa-envelope me-2"></i> {{ service.email }}</p>{% endif %}
-            {% if service.address %}<p><i class="fas fa-home me-2"></i> {{ service.address }}</p>{% endif %}
+            {% if service.phone %}<p><i class="fas fa-phone mr-2"></i> {{ service.phone }}</p>{% endif %}
+            {% if service.email %}<p><i class="fas fa-envelope mr-2"></i> {{ service.email }}</p>{% endif %}
+            {% if service.address %}<p><i class="fas fa-home mr-2"></i> {{ service.address }}</p>{% endif %}
             {% if service.website %}
-            <p><i class="fas fa-globe me-2 text-muted"></i><strong>Website:</strong><a href="{{ service.website }}" target="_blank" class="text-primary">Visit Website</a>
+            <p><i class="fas fa-globe text-muted"></i><strong>Website:</strong><a href="{{ service.website }}" target="_blank" class="text-primary ml-2">Visit Website</a>
             </p>
-            {% endif %}       
+            {% endif %}     
         </div>    
         
         <!-- Back Button -->
-        <div class="row">
-            <div class="mb-4 mt-4">
+        <div class="row ml-3">
+            <div class="my-4">
                 <a {% if 'services/search' in request.META.HTTP_REFERER %} href="{{ request.META.HTTP_REFERER }}" {% else %} href="{% url 'services:serv_search' %}" {% endif %}    class="btn btn-secondary">
                 <i class="fas fa-arrow-left"></i> Back to Search Results
                 </a>

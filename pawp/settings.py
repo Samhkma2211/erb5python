@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'pages.apps.PagesConfig',
     'adoption.apps.AdoptionConfig',
     'services.apps.ServicesConfig',
+    'shop.apps.ShopConfig',
+    'order.apps.OrderConfig', 
     'accounts.apps.AccountsConfig',
 ]
 
@@ -71,6 +73,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'shop.context_processors.cart_quantity',
             ],
         },
     },
@@ -87,7 +90,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'pawpdb',
         'USER': 'postgres',
-        'PASSWORD': '',
+        'PASSWORD': '1987',
         'HOST': 'localhost'
     }
 }

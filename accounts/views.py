@@ -1,6 +1,8 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages,auth
 from django.contrib.auth.models import User
+from order.models import Order
+from shop.views import restore_stock_quantities
 
 # Create your views here.
 def register(request):
@@ -38,7 +40,8 @@ def login(request):
     user = auth.authenticate(username=username,password=password)
     if user is not None:
       auth.login(request,user)
-      return redirect('index')
+      next_url = request.POST.get('next', 'index')
+      return redirect(next_url)
     else:
       messages.error(request,"Username or password incorrect!")
       return redirect('login')
@@ -47,12 +50,29 @@ def login(request):
 
 def logout(request):
   if request.method == 'POST':
+    # Restore stock quantities from cart before logout
+    cart = request.session.get('cart', {})
+    if cart:
+        restore_stock_quantities(cart)
+    
+    # Clear the cart
+    request.session['cart'] = {}
+    
     auth.logout(request)
   return redirect ('index')
 
 def dashboard(request):
   if request.user.is_authenticated:
-
-    return render(request, 'accounts/dashboard.html')
+    orders = Order.objects.filter(user=request.user).order_by('-created_at')
+    user_profile = {
+        'username': request.user.username,
+        'email': request.user.email,
+        'first_name': request.user.first_name,
+        'last_name': request.user.last_name,
+        'date_joined': request.user.date_joined
+    }
+    context = {'orders':orders,
+              'profile':user_profile}
+    return render(request, 'accounts/dashboard.html',context)
   else:
     return redirect('index')
