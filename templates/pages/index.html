@@ -52,11 +52,11 @@
     <!-- adoption -->
     <section class="mx-3 my-5">
       <h3 class="font-weight-bolder mb-3 text-center title-color">Meet our dogs !</h3>
-        <div class="row mx-1">
+        <div class="row mx-1 justify-content-center">
           {% for dog in dogs %}
-            <div class="card col-sm-6 col-lg-3 mx-auto my-3 bg-transparent border-0 text-center index_card">
+            <div class="card col-sm-5 col-lg-3 mx-auto my-3 bg-transparent border-0 text-center index_card">
               <a href="{% url 'adoption:dog_detail' dog.id %}" class="text-decoration-none">
-                <img src="{{ dog.photo_main.url }}" class="card-img-top" alt="{{ dog.name }}">
+                <img src="{{ dog.photo_main.url }}" class="index-card-img-top" alt="{{ dog.name }}">
                 <h5 class="card-title font-italic text-dark">{{ dog.name }}</h5>
               </a>
             </div>
@@ -65,27 +65,6 @@
                 <p>No dogs available for adoption at the moment.</p>
             </div>
           {% endfor %}
-          <!-- dog 2 -->
-          <div class="card col-sm-6 col-lg-3 mx-auto my-3 bg-transparent border-0 text-center index_card">
-            <a href="#" class="text-decoration-none">
-              <img src="{% static 'img/index_01.jpg' %}" class="card-img-top" alt="dog-1">            
-              <h5 class="card-title font-italic text-dark">Happy2</h5>
-            </a>
-          </div>
-          <!-- dog 3 -->
-          <div class="card col-sm-6 col-lg-3 mx-auto my-3 text-center bg-transparent border-0 index_card">
-            <a href="#" class="text-decoration-none">
-              <img src="{% static 'img/index_01.jpg' %}" class="card-img-top" alt="dog-1">
-              <h5 class="card-title font-italic text-dark">Happy3</h5>
-            </a>
-          </div>
-          <!-- dog 4 -->
-          <div class="card col-sm-6 col-lg-3 mx-auto my-3 text-center bg-transparent border-0 index_card">
-            <a href="#" class="text-decoration-none">
-              <img src="{% static 'img/index_01.jpg' %}" class="card-img-top" alt="dog-1">
-              <h5 class="card-title font-italic text-dark">Happy4</h5>
-            </a>
-          </div>
         </div>
       <a href="{% url 'adoption:dog_list' %}" class="btn btn-block btn-outline-custom w-50 mx-auto">Explore Adoption</a>
     </section>
@@ -93,39 +72,29 @@
     <section class="mx-auto my-5">
       <h3 class="font-weight-bolder mb-3 text-center title-color">Shop</h3>
       <div class="row mx-auto justify-content-md-center">
+        {% for product in products %}
           <div class="card col-lg-3 col-8 p-0 mx-auto mx-md-1 my-3 text-center index_card">
-            <img src="{% static 'img/index_02.jpg' %}" class="card-img-top" alt="dog-1">
+            <img src="{{ product.image.url }}" class="index-card-img-top align-self-center" alt="{{product.name}}">
             <div class="card-body">
-              <h5 class="card-title">Food1</h5>
-              <p class="card-text">$20/bag</p>
-              <a href="#" class="btn btn-custom">Buy</a>
+              <h5 class="card-title">{{product.name}}</h5>
+              <p class="card-text">${{product.price}}</p>
+              <a href="{% url 'shop:product_detail' product.id %}" class="btn btn-custom">Buy</a>
             </div>
           </div>
-          <div class="card col-lg-3 col-8 p-0 mx-auto mx-md-1 my-3 text-center index_card">
-            <img src="{% static 'img/index_02.jpg' %}" class="card-img-top" alt="dog-1">
-            <div class="card-body">
-              <h5 class="card-title">Food2</h5>
-              <p class="card-text">$20/bag</p>
-              <a href="#" class="btn btn-custom">Buy</a>
-            </div>
+        {% empty %}
+          <div class="col-12 text-center" >
+            <p>No products available at the moment.</p>
           </div>
-          <div class="card col-lg-3 col-8 p-0 mx-auto mx-md-1 my-3 text-center index_card">
-            <img src="{% static 'img/index_02.jpg' %}" class="card-img-top" alt="dog-1">
-            <div class="card-body">
-              <h5 class="card-title">Food3</h5>
-              <p class="card-text">$20/bag</p>
-              <a href="#" class="btn btn-custom">Buy</a>
-            </div>
-          </div>
+        {% endfor %}
       </div>        
-      <a href="#" class="btn btn-block btn-outline-custom w-50 mx-auto">Explore More Products</a>
+      <a href="{% url 'shop:product_list' %}" class="btn btn-block btn-outline-custom w-50 mx-auto">Explore More Products</a>
 
       
     </section>
     <!-- vet -->
     <section class="mx-auto w-75 my-5">
       <h3 class="font-weight-bolder mb-3 text-center title-color">Services</h3>
-      <p class="text-center">Need to find a vet clinic, grooming or boarding services for your pet?  <a href="{% url 'services:services' %}">Click to find out more...</a></p>
-      
+      <p class="text-center">Need to find a vet clinic, grooming or boarding services for your pet?  <a href="{% url 'services:services' %}">Click to find out more...</a></p>     
     </section>
+
 {% endblock %}

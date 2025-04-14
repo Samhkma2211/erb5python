@@ -4,6 +4,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q 
 from .choices import gender_choices, size_choices, dogtype_choices
 from django.contrib import messages
+from accounts.models import Profile
 
 def dog_list(request):
     dogs = Dog.objects.filter(available=True)
@@ -23,8 +24,15 @@ def dog_list(request):
 
 def dog_detail(request, dog_id):
     dog_detail = get_object_or_404(Dog, pk=dog_id)
+    is_favorite = False
+    if request.user.is_authenticated:        
+        favorite = dog_detail.userprofile.all() #find all user add this dog to favorite
+        if request.user in favorite:
+            is_favorite = True    
+            
     context = {
         'dog_detail': dog_detail,
+        'is_favorite': is_favorite,
     }
     return render(request, 'adoption/dog_detail.html', context)
 
@@ -66,3 +74,29 @@ def adop_search(request):
     }
 
     return render(request, 'adoption/search.html', context)
+
+def toggle_favorite(request,dog_id):
+    dog = get_object_or_404(Dog, id=dog_id)
+    #profile = request.user.profile
+    profile = Profile.objects.get_or_create(user=request.user)[0]
+    
+    if dog in profile.favorite_dog.all():
+        profile.favorite_dog.remove(dog)
+    else:
+        profile.favorite_dog.add(dog)
+    
+    #profile.favorite_dog.add(dog)
+    #profile.save()
+    #print(dog)
+    #print(profile)
+    #favorite = profile.favorite_dog.all()
+    #print(favorite)
+    #if dog in profile.favorite_dog.all():
+        #profile.favorite_dog.remove(dog)
+        #messages.success(request, f"{dog.name} removed from favorites")
+    #else:
+        #profile.favorite_dog.add(dog)
+    #messages.success(request, f"{dog.name} added to favorites")
+    
+        
+    return redirect('adoption:dog_detail', dog_id=dog.id)

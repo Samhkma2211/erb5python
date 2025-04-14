@@ -4,6 +4,7 @@ from decimal import Decimal
 from django.contrib import messages
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 
 def product_list(request, category_slug=None):
     categories = Category.objects.all()
@@ -15,10 +16,14 @@ def product_list(request, category_slug=None):
     else:
         current_category = None
     
+    paginator = Paginator(products, 3)
+    page = request.GET.get('page')
+    paged_products = paginator.get_page(page)
+    
     return render(request, 'shop/product_list.html', {
         'categories': categories,
         'current_category': current_category,
-        'products': products,
+        'products': paged_products,
     })
 
 def product_detail(request, product_id):

@@ -3,6 +3,8 @@ from django.contrib import messages,auth
 from django.contrib.auth.models import User
 from order.models import Order
 from shop.views import restore_stock_quantities
+from adoption.models import Dog
+from .models import Profile
 
 # Create your views here.
 def register(request):
@@ -61,10 +63,15 @@ def logout(request):
     auth.logout(request)
   return redirect ('index')
 
+def profile(request):
+  pass
+
 def dashboard(request):
   if request.user.is_authenticated:
     orders = Order.objects.filter(user=request.user).order_by('-created_at')
-    user_profile = {
+    profile = Profile.objects.get_or_create(user=request.user)[0]
+    fav_dogs = profile.favorite_dog.all()
+    user_info = {
         'username': request.user.username,
         'email': request.user.email,
         'first_name': request.user.first_name,
@@ -72,7 +79,8 @@ def dashboard(request):
         'date_joined': request.user.date_joined
     }
     context = {'orders':orders,
-              'profile':user_profile}
+              'fav_dogs':fav_dogs,
+              'user_info':user_info}
     return render(request, 'accounts/dashboard.html',context)
   else:
     return redirect('index')

@@ -1,12 +1,4 @@
 /* services */
-.services-section {
-    background: url(../img/services_01.jpg) ;
-    background-size: cover;
-    background-position: center;
-    color: white;
-    padding: 40px 0;
-    margin-bottom: 20px;
-}
 .service-title {
     margin: 0;
     color:#0077b6;
