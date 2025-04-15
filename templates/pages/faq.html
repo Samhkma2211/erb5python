@@ -8,6 +8,8 @@
     </div>
 </div>
 <div class="container py-4">
+    {% include 'partials/_alert.html' %}
+
     <!-- FAQ -->
     <div class="row">
         <div class="col-md-12">
@@ -143,25 +145,38 @@
                 </h5>
             </div>
             <div class="collapse" id="collapse7">
-                <div class="card-body pl-5 shadow-sm">
+                <div class="card-body shadow-sm">
 
-                        <form action="#" id="inquiryForm">
-                            
+                        <form method="POST" action="{% url 'inquiry' %}" id="inquiryForm">
+                            {% csrf_token %}
+                            <input type="hidden" name="user_id" value="{% if user.is_authenticated %}{{ user.id }}{% else %}0{% endif %}">
+                            <div class="mb-3">
+                                <label for="inquiry_type" class="form-label">Inquiry Type</label>
+                                <select name="inquiry_type" class="form-control">
+                                    <option value="General Inquiry" selected>General Inquiry</option>
+                                    <option value="Adoption Inquiry">Adoption Inquiry</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
                             <div class="mb-3">
                                 <label for="name" class="form-label">Your Name</label>
-                                <input type="text" class="form-control" id="name" name="name" required>
+                                {% if user.is_authenticated %}
+                                <input type="text" name="name" class="form-control" value="{{user.first_name}} {{user.last_name}}" readonly />
+                                {% else %}
+                                <input type="text" name="name" class="form-control" required />
+                                {% endif %}
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
+                                <input type="email" class="form-control" id="email" name="email" {% if user.is_authenticated %} value={{user.email}} {% endif %} required>
                             </div>
                             <div class="mb-3">
                                 <label for="phone" class="form-label">Phone</label>
                                 <input type="tel" class="form-control" id="phone" name="phone" required>
                             </div>
                             <div class="mb-3">
-                                <label for="message" class="form-label">Message</label>
-                                <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                                <label for="inq_message" class="form-label">Message</label>
+                                <textarea class="form-control" id="inq_message" name="message" rows="4" required></textarea>
                             </div>
                             <div class="mb-3">
                                 <button type="submit" form="inquiryForm" class="btn btn-custom">Submit Inquiry</button>

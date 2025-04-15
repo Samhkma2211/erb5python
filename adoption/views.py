@@ -77,26 +77,9 @@ def adop_search(request):
 
 def toggle_favorite(request,dog_id):
     dog = get_object_or_404(Dog, id=dog_id)
-    #profile = request.user.profile
-    profile = Profile.objects.get_or_create(user=request.user)[0]
-    
+    profile = request.user.profile
     if dog in profile.favorite_dog.all():
         profile.favorite_dog.remove(dog)
     else:
-        profile.favorite_dog.add(dog)
-    
-    #profile.favorite_dog.add(dog)
-    #profile.save()
-    #print(dog)
-    #print(profile)
-    #favorite = profile.favorite_dog.all()
-    #print(favorite)
-    #if dog in profile.favorite_dog.all():
-        #profile.favorite_dog.remove(dog)
-        #messages.success(request, f"{dog.name} removed from favorites")
-    #else:
-        #profile.favorite_dog.add(dog)
-    #messages.success(request, f"{dog.name} added to favorites")
-    
-        
+        profile.favorite_dog.add(dog)        
     return redirect('adoption:dog_detail', dog_id=dog.id)

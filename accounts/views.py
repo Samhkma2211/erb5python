@@ -26,6 +26,8 @@ def register(request):
         else:
           user = User.objects.create_user(username=username,password=password,email=email,first_name=first_name,last_name=last_name)
           user.save()
+          profile = Profile.objects.create(user=user)
+          profile.save()
           messages.success(request,"You are now registered and can log in!")
           return redirect('login')
     else:
@@ -69,7 +71,7 @@ def profile(request):
 def dashboard(request):
   if request.user.is_authenticated:
     orders = Order.objects.filter(user=request.user).order_by('-created_at')
-    profile = Profile.objects.get_or_create(user=request.user)[0]
+    profile = request.user.profile
     fav_dogs = profile.favorite_dog.all()
     user_info = {
         'username': request.user.username,

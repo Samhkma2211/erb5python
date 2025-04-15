@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% block title %}{{ dog_detail.name }}{% endblock %}
 {% block content %}
+{% include 'partials/_alert.html' %}
+
 <div class="container py-5">
     <div class="row">
         <!-- Main Photo -->
@@ -46,7 +48,7 @@
         <div class="col-md-7">
             <div class="d-flex">
                 <h2 class="mb-4">{{ dog_detail.name }}</h2>
-                {% if user.is_authenticated %}               
+                {% if user.is_authenticated %} 
                 <form method="POST" action="{% url 'adoption:toggle_favorite' dog_detail.id %}" class="mb-0">
                     {% csrf_token %}
                     <button type="submit" class="ml-2 mt-2 btn btn-sm {% if dog_detail in user.profile.favorite_dog.all %}btn-warning{% else %}btn-outline-custom{% endif %}">
@@ -84,8 +86,8 @@
                         
                     {% if dog_detail.available %}
                     <div class="mt-4 d-flex justify-content-between align-items-center">
-                        <a {% if 'adoption' in request.META.HTTP_REFERER and request.META.HTTP_REFERER is not request.url %} href="{{ request.META.HTTP_REFERER }}" {% else %} href="{% url 'adoption:dog_list' %}" {% endif %} class="btn btn-secondary">Back</a>
-                        <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#inquiryModal">
+                        <a {% if 'adoption' in request.META.HTTP_REFERER and 'dog' not in request.META.HTTP_REFERER %} href="{{ request.META.HTTP_REFERER }}" {% else %} href="{% url 'adoption:dog_list' %}" {% endif %} class="btn btn-secondary">Back</a>
+                        <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#inquiryModal">
                             Inquire About Adoption
                         </button>
                     </div>
@@ -104,31 +106,38 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="inquiryModalLabel">Inquire About {{ dog_detail.name }}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>&times;</span></button>
                     </div>
                     <div class="modal-body">
-                        <form action="#" id="inquiryForm">
-                            
+                        <form method="POST" action="{% url 'inquiry' %}" id="inquiryForm">
+                            {% csrf_token %}
+                            <input type="hidden" name="inquiry_type" value="Adoption Inquiry">
+                            <input type="hidden" name="dog_id" value="{{ dog_detail.id }}">
+                            <input type="hidden" name="user_id" value="{% if user.is_authenticated %}{{ user.id }}{% else %}0{% endif %}">
                             <div class="mb-3">
                                 <label for="name" class="form-label">Your Name</label>
-                                <input type="text" class="form-control" id="name" name="name" required>
+                                {% if user.is_authenticated %}
+                                <input type="text" name="name" class="form-control" value="{{user.first_name}} {{user.last_name}}" readonly />
+                                {% else %}
+                                <input type="text" name="name" class="form-control" required />
+                                {% endif %}
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
+                                <input type="email" class="form-control" id="email" name="email" {% if user.is_authenticated %} value={{user.email}} {% endif %} required>
                             </div>
                             <div class="mb-3">
                                 <label for="phone" class="form-label">Phone</label>
                                 <input type="tel" class="form-control" id="phone" name="phone" required>
                             </div>
                             <div class="mb-3">
-                                <label for="message" class="form-label">Message</label>
-                                <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                                <label for="inq_message" class="form-label">Message</label>
+                                <textarea class="form-control" id="inq_message" name="message" rows="4" required></textarea>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" form="inquiryForm" class="btn btn-custom">Submit Inquiry</button>
                     </div>
                 </div>

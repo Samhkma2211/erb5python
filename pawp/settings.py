@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'order.apps.OrderConfig', 
     'accounts.apps.AccountsConfig',
+    'inquiry.apps.InquiryConfig',
 ]
 
 MIDDLEWARE = [
@@ -90,7 +91,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'pawpdb',
         'USER': 'postgres',
-        'PASSWORD': '1987',
+        'PASSWORD': '',
         'HOST': 'localhost'
     }
 }
