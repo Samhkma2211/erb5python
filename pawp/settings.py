@@ -91,7 +91,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'pawpdb',
         'USER': 'postgres',
-        'PASSWORD': '',
+        'PASSWORD': '1987',
         'HOST': 'localhost'
     }
 }

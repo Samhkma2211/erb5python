@@ -17,7 +17,7 @@ def create_inquiry(request):
             user_id = int(request.POST.get('user_id', "0"))
             
             # Validate required fields
-            if not all([inquiry_type, name, email, phone]):
+            if not all([inquiry_type, name, email]):
                 messages.error(request, "Please fill in all required fields")
                 if dog_id > 0:
                     return redirect('adoption:dog_detail', dog_id=dog_id)
